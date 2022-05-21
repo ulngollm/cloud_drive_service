@@ -2,9 +2,10 @@ openapi: 3.0.3
 info:
   title: Yandex Disk service
   description: Gateway API для работы с Яндекс Диском
-  version: 1.0.0
+  version: 1.0.1
 servers:
   - url: 'https://localhost:8000/api/v1/'
+    description: dev url
 tags:
   - name: manage
     description: Управление дисками
@@ -132,7 +133,7 @@ paths:
               - text
       responses:
         200:
-          description: Список файлов диска  указанного типаа
+          description: Список файлов диска указанного типа
   /storages/{id}/view/:
     get:
       security:
@@ -162,7 +163,7 @@ components:
       type: object
       properties:
         label:
-          description: Собственное название для диска
+          description: Пользовательское название для диска
           type: string
           default: Диск id
         driver:
@@ -170,13 +171,19 @@ components:
           type: string
           enum:
             - ya_disk
-            - ftp (deprecated)
+            - ftp (not active)
         auth_data:
           type: object
   examples:
     yandex:
       summary: Яндекс Диск
-      description: Авторизация в Яндекс Диск по отладочному токену
+      description: | 
+        Авторизация в Яндекс Диск по отладочному токену
+        
+        Чтобы получить токен, перенаправить пользователя по адресу
+        https://oauth.yandex.ru/authorize?response_type=token&client_id=APP_ID.
+        
+        Пользователь должен быть залогиненным в яндекс и предоставить доступ к своему диску.
       value:
         label: DS drive
         driver: 'ya_disk'
