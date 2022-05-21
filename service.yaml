@@ -1,0 +1,204 @@
+openapi: 3.0.3
+info:
+  title: Yandex Disk service
+  description: Gateway API для работы с Яндекс Диском
+  version: 1.0.0
+servers:
+  - url: 'https://localhost:8000/api/v1/'
+tags:
+  - name: manage
+    description: Управление дисками
+  - name: nav
+    description: Навигация по файлам
+paths:
+  /storages/:
+    get:
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - nav
+      summary: Список хранилищ пользователя
+      responses:
+        200:
+          description: Список хранилищ авторизованного пользователя
+    post:
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - manage
+      summary: Добавить хранилище
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewStorage'
+            examples:
+              yandex:
+                $ref: '#/components/examples/yandex'
+
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: id хранилища
+                    example: 1
+
+  /storages/{id}/:
+    get:
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - nav
+      summary: Получить содержимое папки диска
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: path
+          required: true
+          schema:
+            type: string
+            default: /
+      responses:
+        200:
+          description: Список файлов по указанному пути
+    patch:
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - manage
+      summary: Переименовать диск
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: ok
+    delete:
+      parameters:
+        - in: path
+          name: id
+          description: id хранилища
+          required: true
+          schema:
+            type: integer
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - manage
+      summary: Удалить хранилище
+      description: soft delete
+      responses:
+        200:
+          description: ok
+  /storages/{id}/{type}:
+    get:
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - nav
+      summary: Отфильтровать по типам контента
+      description: |
+        Через Api яндекса доступны:  audio, backup, book, compressed, data, development, diskimage, document, encoded, executable, flash, font, image, settings, spreadsheet, text, unknown, video, web
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: type
+          required: true
+          description: Тип файла
+          schema:
+            type: string
+            enum:
+              - video
+              - audio
+              - document
+              - image
+              - text
+      responses:
+        200:
+          description: Список файлов диска  указанного типаа
+  /storages/{id}/view/:
+    get:
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - nav
+      summary: Получить контент файла для просмотра
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: path
+          description: Путь к файлу на диске
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: ok
+
+components:
+  schemas:
+    NewStorage:
+      type: object
+      properties:
+        label:
+          description: Собственное название для диска
+          type: string
+          default: Диск id
+        driver:
+          description: Тип драйвера
+          type: string
+          enum:
+            - ya_disk
+            - ftp (deprecated)
+        auth_data:
+          type: object
+  examples:
+    yandex:
+      summary: Яндекс Диск
+      description: Авторизация в Яндекс Диск по отладочному токену
+      value:
+        label: DS drive
+        driver: 'ya_disk'
+        auth_data:
+          token: AQAEA7qi7begAAfqC7jeGwAwxUpHhscXAXEEw
+    ftp:
+      summary: FTP
+      description: |
+        Подключениe ftp-хранилища. 
+        
+        Не реализовано. Только для примера, что в спецификации предусмотрено расширению функционала
+      value:
+        driver: ftp
+        auth_data:
+          username: admin
+          password: 123456
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+
+
+
+  
