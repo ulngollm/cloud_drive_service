@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('storage_types', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->string('driver');//список доступных драйверов см в кастомном конфиге
+            $table->string('name');
+            $table->string('driver')->unique();//список доступных драйверов см в кастомном конфиге
             $table->boolean('active')->default(true);
         });
     }
