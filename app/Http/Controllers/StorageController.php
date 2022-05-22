@@ -6,6 +6,7 @@ use App\Http\Services\CommonStorage;
 use App\Http\Services\DTO\NewStorage;
 use App\Http\Services\ExternalStorageRouter;
 use App\Http\Services\YaDiskRequests\FolderRequest;
+use App\Http\Services\YaDiskRequests\TypeRequest;
 use App\Models\Storage;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class StorageController extends Controller
 
     public function getList(Request $request)
     {
-        return $this->service->getList(3);
+        return $this->service->getList(2);
     }
 
     public function addStorage(Request $request)
@@ -55,9 +56,14 @@ class StorageController extends Controller
 
     }
 
-    public function filterByType(Request $request, int $id)
+    public function filterByType(Request $request, int $id, string $type, ExternalStorageRouter $router)
     {
-        $type = $request->get('type');
+        $apiRequest = new TypeRequest($type);
+        $storage = Storage::find($id);
+
+        $handler = $router->findHandler($storage);
+        return $handler->filterByType($apiRequest)->getItems();
+
     }
 
 

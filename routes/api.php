@@ -25,3 +25,4 @@ Route::post('/storages/', [StorageController::class, 'addStorage']);
 Route::get('/storages/', [StorageController::class, 'getList']);
 
 Route::get('/storages/{id}/files', [StorageController::class, 'getFolderFiles']);
+Route::get('/storages/{id}/{type}', [StorageController::class, 'filterByType']);
