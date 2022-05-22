@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StorageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::patch('/storages/{id}', [StorageController::class, 'renameStorage']);
+Route::delete('/storages/{id}', [StorageController::class, 'deleteStorage']);
+Route::post('/storages/', [StorageController::class, 'addStorage']);
+Route::get('/storages/', [StorageController::class, 'getList']);

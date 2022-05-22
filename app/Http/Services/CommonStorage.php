@@ -2,41 +2,42 @@
 
 namespace App\Http\Services;
 
+use App\Http\Services\DTO\NewStorage;
 use App\Models\Storage;
-use App\Models\StorageType;
 use Illuminate\Support\Collection;
 
 class CommonStorage
 {
 
+    public function __construct(
+        public array $drivers,
 
-    public function addStorage(array $data)
+    )
     {
-//        type будет передаваться в виде строки
-        $cred_type = config("storages.driver.{$data['type']}");
-        $credentials = $cred_type::create([
-            'token' => $data['token']
+    }
+
+    public function addStorage(NewStorage $data)
+    {
+        $storage = Storage::create([
+            'label' => $data->label,
+            'user_id' => $data->user_id,
+            'type_id' => $data->driver
         ]);
-//        проверка на дубли? нет ли уже в базе такого
-        return Storage::create([
-            'label' => $data['label'],
-            'user_id' => $data['user_id'],
-            'type_id' => StorageType::YaDiskStorageType,
-            'credentials_id' => $credentials->id
-        ]);
+        resolve(CredentialsStorage::class)->addCredentials($storage, $data->credentials);
+        return $storage;
     }
 
     public function getList(int $userId): Collection
     {
-        return Storage::where('user_id', $userId)->all();
+        return Storage::where('user_id', $userId)->get();
     }
 
-    public function renameStorage(int $id, string $name): void
+    public function renameStorage(int $id, string $label): Storage
     {
-//        проверять права на изменение этого storage
-        Storage::find($id)->update([
-            'label' => 'name'
-        ]);
+        $storage = Storage::find($id);
+        $storage->label = $label;
+        $storage->save();
+        return $storage;
     }
 
     public function deleteStorage(int $id): void
