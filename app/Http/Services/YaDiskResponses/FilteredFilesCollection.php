@@ -3,6 +3,7 @@
 namespace App\Http\Services\YaDiskResponses;
 
 use App\Http\Services\DTO\ExternalFile;
+use App\Http\Services\DTO\YaDiskFile;
 use Illuminate\Support\Arr;
 
 class FilteredFilesCollection extends ExternalFilesCollection
@@ -12,13 +13,7 @@ class FilteredFilesCollection extends ExternalFilesCollection
     {
         $items = collect(Arr::get($json, 'items'))
             ->map(function ($item) {
-                return new ExternalFile(
-                    id: $item['resource_id'],
-                    type: $item['type'],
-                    name: $item['name'],
-                    path: $item['path'] ?? null,
-                    mimeType: $item['mime_type'] ?? null
-                );
+                return YaDiskFile::from($item);
             });
         return new static($items);
     }
