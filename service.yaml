@@ -167,11 +167,8 @@ components:
           type: string
           default: Диск id
         driver:
-          description: Тип драйвера
-          type: string
-          enum:
-            - ya_disk
-            - ftp (not active)
+          description: id типа драйвера
+          type: integer
         auth_data:
           type: object
   examples:
@@ -186,7 +183,7 @@ components:
         Пользователь должен быть залогиненным в яндекс и предоставить доступ к своему диску.
       value:
         label: DS drive
-        driver: 'ya_disk'
+        driver: 1
         auth_data:
           token: AQAEA7qi7begAAfqC7jeGwAwxUpHhscXAXEEw
     ftp:
@@ -196,7 +193,7 @@ components:
         
         Не реализовано. Только для примера, что в спецификации предусмотрено расширению функционала
       value:
-        driver: ftp
+        driver: 2
         auth_data:
           username: admin
           password: 123456
