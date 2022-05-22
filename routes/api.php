@@ -23,3 +23,5 @@ Route::patch('/storages/{id}', [StorageController::class, 'renameStorage']);
 Route::delete('/storages/{id}', [StorageController::class, 'deleteStorage']);
 Route::post('/storages/', [StorageController::class, 'addStorage']);
 Route::get('/storages/', [StorageController::class, 'getList']);
+
+Route::get('/storages/{id}/files', [StorageController::class, 'getFolderFiles']);

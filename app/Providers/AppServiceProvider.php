@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Http\Services\CommonStorage;
 use App\Http\Services\Connectors\YaDiskConnector;
 use App\Http\Services\CredentialsStorage;
+use App\Http\Services\ExternalStorageRouter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
