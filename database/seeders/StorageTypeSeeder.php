@@ -15,15 +15,17 @@ class StorageTypeSeeder extends Seeder
      */
     public function run()
     {
-        $suppported_drivers = collect(config('storages.driver'));
+        $drivers = config('storages.driver');
 
         DB::table('storage_types')->insertOrIgnore(
-            $suppported_drivers->mapWithKeys(function ($item, $key) {
-                return [
-                    'name' => $item['name'],
-                    'driver' => $key,
-                ];
-            })->toArray());
+            collect($drivers)->keys()
+                ->mapWithKeys(function ($item, $key) use ($drivers) {
+                    return [
+                        'id' => $key + 1,
+                        'driver' => $item,
+                        'name' => $drivers[$item]['name'],
+                    ];
+                })->toArray());
 
     }
 }
