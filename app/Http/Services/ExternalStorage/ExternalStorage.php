@@ -14,6 +14,4 @@ interface ExternalStorage
 
     public function getFile(string $path): DownloadedFile;
 
-    public function getCredentials(): StorageCredentials;
-
 }
