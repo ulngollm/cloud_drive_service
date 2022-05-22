@@ -25,16 +25,15 @@ class CommonStorage
         return Storage::where('user_id', $userId)->get();
     }
 
-    public function renameStorage(int $id, string $label): Storage
+    public function renameStorage(Storage $storage, string $label): Storage
     {
-        $storage = Storage::find($id);
         $storage->label = $label;
         $storage->save();
         return $storage;
     }
 
-    public function deleteStorage(int $id): void
+    public function deleteStorage(Storage $storage): void
     {
-        Storage::find($id)->delete();
+        $storage->delete();
     }
 }

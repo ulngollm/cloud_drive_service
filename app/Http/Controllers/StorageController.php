@@ -34,22 +34,21 @@ class StorageController extends Controller
         return $this->service->addStorage($storage);
     }
 
-    public function renameStorage(Request $request, int $id)
+    public function renameStorage(Request $request, Storage $storage)
     {
         $label = $request->get('label');
-        return $this->service->renameStorage($id, $label);
+        return $this->service->renameStorage($storage, $label);
     }
 
-    public function deleteStorage(int $id)
+    public function deleteStorage(Storage $storage)
     {
 //        проверять права пользователя
-        $this->service->deleteStorage($id);
+        $this->service->deleteStorage($storage);
     }
 
-    public function getFolderFiles(Request $request, int $id, ExternalStorageRouter $router)
+    public function getFolderFiles(Request $request, Storage $storage, ExternalStorageRouter $router)
     {
         $apiRequest = FolderRequest::fromRequest($request);
-        $storage = Storage::find($id);
 
         $handler = $router->findHandler($storage);
         return $handler->getFolderFiles($apiRequest)->getItems();
@@ -57,10 +56,9 @@ class StorageController extends Controller
 
     }
 
-    public function filterByType(Request $request, int $id, string $type, ExternalStorageRouter $router)
+    public function filterByType(Request $request, Storage $storage, string $type, ExternalStorageRouter $router)
     {
         $apiRequest = new TypeRequest($type);
-        $storage = Storage::find($id);
 
         $handler = $router->findHandler($storage);
         return $handler->filterByType($apiRequest)->getItems();
@@ -68,10 +66,9 @@ class StorageController extends Controller
     }
 
 
-    public function getFile(Request $request, int $id, ExternalStorageRouter $router)
+    public function getFile(Request $request, Storage $storage, ExternalStorageRouter $router)
     {
         $apiRequest = FileDownloadRequest::fromRequest($request);
-        $storage = Storage::find($id);
 
         $handler = $router->findHandler($storage);
         $response = $handler->getFile($apiRequest);

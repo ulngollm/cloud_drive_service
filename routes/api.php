@@ -19,12 +19,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::patch('/storages/{id}', [StorageController::class, 'renameStorage']);
-Route::delete('/storages/{id}', [StorageController::class, 'deleteStorage']);
+Route::patch('/storages/{storage}', [StorageController::class, 'renameStorage']);
+Route::delete('/storages/{storage}', [StorageController::class, 'deleteStorage']);
 Route::post('/storages/', [StorageController::class, 'addStorage']);
 Route::get('/storages/', [StorageController::class, 'getList']);
 
-Route::get('/storages/{id}/file', [StorageController::class, 'getFile']);
-Route::get('/storages/{id}/files', [StorageController::class, 'getFolderFiles']);
-Route::get('/storages/{id}/{type}', [StorageController::class, '']);
+Route::get('/storages/{storage}/file', [StorageController::class, 'getFile']);
+Route::get('/storages/{storage}/files', [StorageController::class, 'getFolderFiles']);
+Route::get('/storages/{storage}/{type}', [StorageController::class, 'filterByType']);
 
