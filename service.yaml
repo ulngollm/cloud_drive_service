@@ -134,16 +134,17 @@ paths:
       responses:
         200:
           description: Список файлов диска указанного типа
-  /storages/{id}/view/:
+  /storages/{id}/file/:
     get:
       security:
         - bearerAuth: [ ]
       tags:
         - nav
-      summary: Получить контент файла для просмотра
+      summary: Получить ссылку на загрузку файла
       parameters:
         - in: path
           name: id
+          description: id диска
           required: true
           schema:
             type: integer
