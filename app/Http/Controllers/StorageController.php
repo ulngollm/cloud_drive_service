@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\CommonStorage;
 use App\Http\Services\DTO\NewStorage;
+use App\Http\Services\ExternalStorageRouter;
 use App\Http\Services\YaDiskRequests\FolderRequest;
 use App\Models\Storage;
 use App\Models\User;
@@ -43,9 +44,14 @@ class StorageController extends Controller
         $this->service->deleteStorage($id);
     }
 
-    public function getFolderFiles(Request $request, int $id)
+    public function getFolderFiles(Request $request, int $id, ExternalStorageRouter $router)
     {
-        $path = $request->get('path');
+        $apiRequest = FolderRequest::fromRequest($request);
+        $storage = Storage::find($id);
+
+        $handler = $router->findHandler($storage);
+        return $handler->getFolderFiles($apiRequest)->getItems();
+
 
     }
 

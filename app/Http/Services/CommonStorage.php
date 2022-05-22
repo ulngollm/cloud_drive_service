@@ -9,13 +9,6 @@ use Illuminate\Support\Collection;
 class CommonStorage
 {
 
-    public function __construct(
-        public array $drivers,
-
-    )
-    {
-    }
-
     public function addStorage(NewStorage $data)
     {
         $storage = Storage::create([

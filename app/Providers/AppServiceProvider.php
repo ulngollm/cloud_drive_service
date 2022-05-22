@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->when(YaDiskConnector::class)
             ->needs('$baseUrl')
             ->giveConfig('storages.driver.ya_disk.base_url');
-        $this->app->when(CommonStorage::class)
+        $this->app->when(ExternalStorageRouter::class)
             ->needs('$drivers')
             ->giveConfig('storages.driver');
         $this->app->when(CredentialsStorage::class)
