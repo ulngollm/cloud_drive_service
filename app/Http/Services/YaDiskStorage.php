@@ -3,8 +3,10 @@
 namespace App\Http\Services;
 
 use App\Http\Services\Connectors\YaDiskConnector;
+use App\Http\Services\YaDiskRequests\FileDownloadRequest;
 use App\Http\Services\YaDiskRequests\FolderRequest;
 use App\Http\Services\YaDiskRequests\TypeRequest;
+use App\Http\Services\YaDiskResponses\DownloadFile;
 use App\Http\Services\YaDiskResponses\ExternalFilesCollection;
 use App\Http\Services\YaDiskResponses\FilteredFilesCollection;
 use App\Http\Services\YaDiskResponses\FolderFilesCollection;
@@ -38,9 +40,11 @@ class YaDiskStorage implements ExternalStorage
         return FolderFilesCollection::from($result);
     }
 
-    public function getFile(string $path)
+    public function getFile(FileDownloadRequest $request): DownloadFile
     {
-        // TODO: Implement getFile() method.
+        $credentials = $this->getCredentials();
+        $result = $this->connector->makeRequest($request, $credentials);
+        return DownloadFile::from($result);
     }
 
     public function getCredentials(): StorageCredentials|TokenStorageCredentials

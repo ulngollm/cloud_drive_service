@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Services\CommonStorage;
 use App\Http\Services\DTO\NewStorage;
 use App\Http\Services\ExternalStorageRouter;
+use App\Http\Services\YaDiskRequests\FileDownloadRequest;
 use App\Http\Services\YaDiskRequests\FolderRequest;
 use App\Http\Services\YaDiskRequests\TypeRequest;
 use App\Models\Storage;
@@ -67,9 +68,14 @@ class StorageController extends Controller
     }
 
 
-    public function getFile(Request $request, int $id)
+    public function getFile(Request $request, int $id, ExternalStorageRouter $router)
     {
-        $path = $request->get('path');
+        $apiRequest = FileDownloadRequest::fromRequest($request);
+        $storage = Storage::find($id);
+
+        $handler = $router->findHandler($storage);
+        $response = $handler->getFile($apiRequest);
+        return response()->json($response);
 
     }
 }
