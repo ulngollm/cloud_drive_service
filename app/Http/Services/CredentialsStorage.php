@@ -3,7 +3,8 @@
 namespace App\Http\Services;
 
 use App\Models\Storage;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\StorageCredentials;
+use Illuminate\Support\Arr;
 
 class CredentialsStorage
 {
@@ -15,12 +16,12 @@ class CredentialsStorage
 
     public function findCredType(string $driver): string
     {
-        return $this->drivers[$driver]['credentials_type'];
+        return Arr::get($this->drivers, "$driver.credentials_type");
     }
 
-    public function getCredentials(Storage $storage, Model $credType): array
+    public function getCredentials(Storage $storage, string $credType): StorageCredentials
     {
-        return $credType::firstWhere('storage_id', $storage->id);
+        return $credType::where('storage_id', $storage->id)->get()->first();
     }
 
     public function addCredentials(Storage $storage, array $credentials): void

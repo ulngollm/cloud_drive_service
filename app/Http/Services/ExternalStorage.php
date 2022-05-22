@@ -2,7 +2,7 @@
 
 namespace App\Http\Services;
 
-use App\Models\Storage;
+use App\Models\StorageCredentials;
 
 interface ExternalStorage
 {
@@ -11,5 +11,7 @@ interface ExternalStorage
     public function getFolderFiles(string $path);
 
     public function getFile(string $path);
+
+    public function getCredentials(): StorageCredentials;
 
 }
