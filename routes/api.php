@@ -28,3 +28,10 @@ Route::get('/storages/{storage}/file', [StorageController::class, 'getFile']);
 Route::get('/storages/{storage}/files', [StorageController::class, 'getFolderFiles']);
 Route::get('/storages/{storage}/{type}', [StorageController::class, 'filterByType']);
 
+});
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/storages/', [StorageController::class, 'addStorage']);
+    Route::get('/storages/', [StorageController::class, 'getList']);
+});
+
+Route::get('/token/create', AuthController::class)->name('login');

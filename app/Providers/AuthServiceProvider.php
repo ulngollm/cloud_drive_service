@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Storage;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -25,6 +27,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('access-storage', function (User $user, Storage $storage) {
+            return $storage->user->id === $user->id;
+        });
     }
 }

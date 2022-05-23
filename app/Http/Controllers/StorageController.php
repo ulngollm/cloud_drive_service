@@ -22,15 +22,15 @@ class StorageController extends Controller
 
     public function getList(Request $request)
     {
-        return $this->service->getList(2);
+        $userId = $request->user()->id;
+        return $this->service->getList($userId);
     }
 
     public function addStorage(Request $request)
     {
-        $user = User::find(2);
+        $user = $request->user();
 
         $storage = NewStorage::fromRequest($request)->userId($user->id);
-        //        проверка на дубли? нет ли уже в базе такого
         return $this->service->addStorage($storage);
     }
 
@@ -42,7 +42,6 @@ class StorageController extends Controller
 
     public function deleteStorage(Storage $storage)
     {
-//        проверять права пользователя
         $this->service->deleteStorage($storage);
     }
 
