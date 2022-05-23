@@ -34,4 +34,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/storages/', [StorageController::class, 'getList']);
 });
 
-Route::get('/token/create', AuthController::class)->name('login');
+Route::get('/token/create', AuthController::class);
+Route::get('/login', function (){
+   abort(403);
+})->name('login');
