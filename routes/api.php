@@ -23,9 +23,9 @@ Route::middleware(['auth:sanctum', CheckStorageAccess::class])->group(function (
     Route::get('/storages/{storage}', [StorageController::class, 'getStorage']);
     Route::patch('/storages/{storage}', [StorageController::class, 'renameStorage']);
     Route::delete('/storages/{storage}', [StorageController::class, 'deleteStorage']);
-    Route::get('/storages/{storage}/files', [StorageController::class, 'getFolderFiles']);
-    Route::get('/storages/{storage}/file', [StorageController::class, 'getFile']);
-    Route::get('/storages/{storage}/{type}', [StorageController::class, 'filterByType']);
+    Route::get('/storages/{storage}/files/folder', [StorageController::class, 'getFolderFiles']);
+    Route::get('/storages/{storage}/files/{type}', [StorageController::class, 'filterByType']);
+    Route::get('/storages/{storage}/files/', [StorageController::class, 'getFile']);//должен вернуть бинарный файл
 
 });
 Route::middleware(['auth:sanctum'])->group(function () {
