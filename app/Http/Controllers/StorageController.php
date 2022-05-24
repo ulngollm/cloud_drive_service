@@ -34,6 +34,11 @@ class StorageController extends Controller
         return $this->service->addStorage($storage);
     }
 
+    public function getStorage(Request $request, Storage $storage)
+    {
+        return $storage;
+    }
+
     public function renameStorage(Request $request, Storage $storage)
     {
         $label = $request->get('label');
@@ -72,6 +77,15 @@ class StorageController extends Controller
         $handler = $router->findHandler($storage);
         $response = $handler->getFile($apiRequest);
         return response()->json($response);
+    }
 
+    /**
+     * Получить список всех доступных типов хранилищ
+     * @param Request $request
+     * @return Collection
+     */
+    public function getTypeList(Request $request): Collection
+    {
+        return StorageType::all();
     }
 }

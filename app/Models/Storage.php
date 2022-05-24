@@ -15,6 +15,10 @@ class Storage extends Model
         'label', 'user_id', 'type_id'
     ];
 
+    protected $hidden = [
+        'user', 'user_id'
+    ];
+
     public function type(): BelongsTo
     {
         return $this->belongsTo(StorageType::class);
