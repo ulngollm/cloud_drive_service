@@ -2,10 +2,9 @@
 
 namespace App\Providers;
 
-use App\Http\Services\CommonStorage;
-use App\Http\Services\Connectors\YaDiskConnector;
-use App\Http\Services\CredentialsStorage;
-use App\Http\Services\ExternalStorageRouter;
+use App\Http\Services\ExternalStorage\Connectors\YaDiskConnector;
+use App\Http\Services\ExternalStorage\CredentialsStorage;
+use App\Http\Services\ExternalStorage\Router;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->when(YaDiskConnector::class)
             ->needs('$baseUrl')
             ->giveConfig('storages.driver.ya_disk.base_url');
-        $this->app->when(ExternalStorageRouter::class)
+        $this->app->when(Router::class)
             ->needs('$drivers')
             ->giveConfig('storages.driver');
         $this->app->when(CredentialsStorage::class)

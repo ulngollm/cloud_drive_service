@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Services\YaDiskResponses;
+namespace App\Http\Services\ExternalStorage\Responses\YaDisk;
 
-use App\Http\Services\DTO\ExternalFile;
-use App\Http\Services\DTO\YaDiskFile;
+use App\Http\Services\ExternalStorage\DTO\YaDiskFile;
+use App\Http\Services\ExternalStorage\Responses\ExternalFilesCollection;
 use Illuminate\Support\Arr;
 
 class FilteredFilesCollection extends ExternalFilesCollection

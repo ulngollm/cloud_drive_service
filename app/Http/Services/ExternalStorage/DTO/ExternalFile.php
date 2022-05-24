@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\DTO;
+namespace App\Http\Services\ExternalStorage\DTO;
 
 abstract class ExternalFile
 {

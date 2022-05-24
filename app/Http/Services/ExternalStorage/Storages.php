@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Http\Services\ExternalStorage;
 
-use App\Http\Services\DTO\NewStorage;
+use App\Http\Services\ExternalStorage\DTO\NewStorage;
 use App\Models\Storage;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
-class CommonStorage
+class Storages
 {
 
     public function addStorage(NewStorage $data)

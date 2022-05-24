@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\YaDiskResponses;
+namespace App\Http\Services\ExternalStorage\Responses;
 
 use Illuminate\Support\Collection;
 

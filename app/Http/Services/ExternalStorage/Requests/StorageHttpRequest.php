@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\YaDiskRequests;
+namespace App\Http\Services\ExternalStorage\Requests;
 
 interface StorageHttpRequest
 {

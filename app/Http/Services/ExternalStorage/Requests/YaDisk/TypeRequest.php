@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Services\YaDiskRequests;
+namespace App\Http\Services\ExternalStorage\Requests\YaDisk;
 
-use Illuminate\Http\Request;
+use App\Http\Services\ExternalStorage\Requests\StorageHttpRequest;
 
 class TypeRequest implements StorageHttpRequest
 {

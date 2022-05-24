@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Services\YaDiskRequests;
+namespace App\Http\Services\ExternalStorage\Requests\YaDisk;
 
+use App\Http\Services\ExternalStorage\Requests\StorageHttpRequest;
 use Illuminate\Http\Request;
 
-class FileDownloadRequest implements StorageHttpRequest
+class FolderRequest implements StorageHttpRequest
 {
 
     public function __construct(
@@ -20,7 +21,7 @@ class FileDownloadRequest implements StorageHttpRequest
 
     public function getPath(): string
     {
-        return '/disk/resources/download';
+        return '/disk/resources';
     }
 
     public function getParams(): array
@@ -32,6 +33,7 @@ class FileDownloadRequest implements StorageHttpRequest
 
     public static function fromRequest(Request $request): self
     {
-        return new self($request->get('path'));
+        $defaultPath = '/';
+        return new self($request->get('path') ?? $defaultPath);
     }
 }

@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Services\CommonStorage;
-use App\Http\Services\DTO\NewStorage;
-use App\Http\Services\ExternalStorageRouter;
-use App\Http\Services\YaDiskRequests\FileDownloadRequest;
-use App\Http\Services\YaDiskRequests\FolderRequest;
-use App\Http\Services\YaDiskRequests\TypeRequest;
+use App\Http\Services\ExternalStorage\Storages;
+use App\Http\Services\ExternalStorage\DTO\NewStorage;
+use App\Http\Services\ExternalStorage\Requests\YaDisk\FileDownloadRequest;
+use App\Http\Services\ExternalStorage\Requests\YaDisk\FolderRequest;
+use App\Http\Services\ExternalStorage\Requests\YaDisk\TypeRequest;
+use App\Http\Services\ExternalStorage\Router;
 use App\Models\Storage;
-use App\Models\User;
+use App\Models\StorageType;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class StorageController extends Controller
 {
     public function __construct(
-        private CommonStorage $service
+        private Storages $storages
     )
     {
     }
@@ -23,7 +24,7 @@ class StorageController extends Controller
     public function getList(Request $request)
     {
         $userId = $request->user()->id;
-        return $this->service->getList($userId);
+        return $this->storages->getList($userId);
     }
 
     public function addStorage(Request $request)
@@ -31,7 +32,7 @@ class StorageController extends Controller
         $user = $request->user();
 
         $storage = NewStorage::fromRequest($request)->userId($user->id);
-        return $this->service->addStorage($storage);
+        return $this->storages->addStorage($storage);
     }
 
     public function getStorage(Request $request, Storage $storage)
@@ -42,15 +43,15 @@ class StorageController extends Controller
     public function renameStorage(Request $request, Storage $storage)
     {
         $label = $request->get('label');
-        return $this->service->renameStorage($storage, $label);
+        return $this->storages->renameStorage($storage, $label);
     }
 
     public function deleteStorage(Storage $storage)
     {
-        $this->service->deleteStorage($storage);
+        $this->storages->deleteStorage($storage);
     }
 
-    public function getFolderFiles(Request $request, Storage $storage, ExternalStorageRouter $router)
+    public function getFolderFiles(Request $request, Storage $storage, Router $router)
     {
         $apiRequest = FolderRequest::fromRequest($request);
 
@@ -60,7 +61,7 @@ class StorageController extends Controller
 
     }
 
-    public function filterByType(Request $request, Storage $storage, string $type, ExternalStorageRouter $router)
+    public function filterByType(Request $request, Storage $storage, string $type, Router $router)
     {
         $apiRequest = new TypeRequest($type);
 
@@ -70,7 +71,7 @@ class StorageController extends Controller
     }
 
 
-    public function getFile(Request $request, Storage $storage, ExternalStorageRouter $router)
+    public function getFile(Request $request, Storage $storage, Router $router)
     {
         $apiRequest = FileDownloadRequest::fromRequest($request);
 

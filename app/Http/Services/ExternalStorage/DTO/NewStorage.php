@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Services\DTO;
+namespace App\Http\Services\ExternalStorage\DTO;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 
 

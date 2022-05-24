@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Http\Services\YaDiskStorage;
+use App\Http\Services\ExternalStorage\YaDiskStorage;
 use App\Models\TokenStorageCredentials;
 
 return [

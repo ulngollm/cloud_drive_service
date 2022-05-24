@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Services\Connectors;
+namespace App\Http\Services\ExternalStorage\Connectors;
 
-use App\Http\Services\YaDiskRequests\StorageHttpRequest;
+use App\Http\Services\ExternalStorage\Requests\StorageHttpRequest;
 use App\Models\TokenStorageCredentials;
 use Illuminate\Support\Facades\Http;
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Http\Services\ExternalStorage;
 
-use App\Http\Services\Connectors\YaDiskConnector;
-use App\Http\Services\YaDiskRequests\FileDownloadRequest;
-use App\Http\Services\YaDiskRequests\FolderRequest;
-use App\Http\Services\YaDiskRequests\TypeRequest;
-use App\Http\Services\YaDiskResponses\DownloadFile;
-use App\Http\Services\YaDiskResponses\ExternalFilesCollection;
-use App\Http\Services\YaDiskResponses\FilteredFilesCollection;
-use App\Http\Services\YaDiskResponses\FolderFilesCollection;
+use App\Http\Services\ExternalStorage\Connectors\YaDiskConnector;
+use App\Http\Services\ExternalStorage\Requests\YaDisk\FileDownloadRequest;
+use App\Http\Services\ExternalStorage\Requests\YaDisk\FolderRequest;
+use App\Http\Services\ExternalStorage\Requests\YaDisk\TypeRequest;
+use App\Http\Services\ExternalStorage\Responses\DownloadFile;
+use App\Http\Services\ExternalStorage\Responses\ExternalFilesCollection;
+use App\Http\Services\ExternalStorage\Responses\YaDisk\FilteredFilesCollection;
+use App\Http\Services\ExternalStorage\Responses\YaDisk\FolderFilesCollection;
 use App\Models\Storage;
 use App\Models\StorageCredentials;
 use App\Models\TokenStorageCredentials;

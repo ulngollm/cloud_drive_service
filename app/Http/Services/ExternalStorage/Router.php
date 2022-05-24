@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Http\Services\ExternalStorage;
 
 use App\Models\Storage;
 
-class ExternalStorageRouter
+class Router
 {
 
     public function __construct(
