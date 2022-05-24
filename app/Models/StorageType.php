@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class StorageType extends Model
 {
@@ -12,8 +12,8 @@ class StorageType extends Model
 
     use HasFactory;
 
-    public function storage(): HasOne
+    public function storage(): HasMany
     {
-        return $this->hasOne(Storage::class);
+        return $this->hasMany(Storage::class);
     }
 }
