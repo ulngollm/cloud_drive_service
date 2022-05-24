@@ -2,22 +2,36 @@ openapi: 3.0.3
 info:
   title: Yandex Disk service
   description: Gateway API для работы с Яндекс Диском
-  version: 1.0.1
+  version: 1.0.2
 servers:
   - url: 'https://localhost:8000/api/v1/'
     description: dev url
 tags:
+  - name: info
+    description: Информация о сервисе
   - name: manage
     description: Управление дисками
   - name: nav
     description: Навигация по файлам
+  - name: auth
+    description: Аутентификация
 paths:
+  /storages/types/:
+    get:
+      tags:
+        - info
+      summary: Список драйверов
+      responses:
+        200:
+          description: Список доступных типов хранилищ
+
   /storages/:
     get:
       security:
         - bearerAuth: [ ]
       tags:
         - nav
+        - manage
       summary: Список хранилищ пользователя
       responses:
         200:
@@ -55,29 +69,23 @@ paths:
       security:
         - bearerAuth: [ ]
       tags:
-        - nav
-      summary: Получить содержимое папки диска
+        - manage
+      summary: Хранилище
       parameters:
         - in: path
           name: id
           required: true
           schema:
             type: integer
-        - in: query
-          name: path
-          required: true
-          schema:
-            type: string
-            default: /
       responses:
         200:
-          description: Список файлов по указанному пути
+          description: Информация о хранилище
     patch:
       security:
         - bearerAuth: [ ]
       tags:
         - manage
-      summary: Переименовать диск
+      summary: Переименовать хранилище
       parameters:
         - in: path
           name: id
@@ -104,15 +112,41 @@ paths:
       responses:
         200:
           description: ok
-  /storages/{id}/{type}:
+  /storages/{id}/files/folder:
     get:
       security:
         - bearerAuth: [ ]
       tags:
         - nav
-      summary: Отфильтровать по типам контента
+      summary: Список файлов папки
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: path
+          required: true
+          schema:
+            type: string
+            default: /
+      responses:
+        200:
+          description: Список файлов по указанному пути
+  /storages/{id}/files/{type}:
+    get:
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - nav
+      summary: Фильтр по типам файлов
       description: |
-        Через Api яндекса доступны:  audio, backup, book, compressed, data, development, diskimage, document, encoded, executable, flash, font, image, settings, spreadsheet, text, unknown, video, web
+        Сквозная фильтрация по типам файлов.
+        
+        Через Api яндекса доступны:  audio, backup, book, compressed, data, development, diskimage, document, encoded, executable, flash, font, image, settings, spreadsheet, text, unknown, video, web. 
+        
+        Из них поддеживаются только перечисленные в параметрах
       parameters:
         - in: path
           name: id
@@ -134,13 +168,14 @@ paths:
       responses:
         200:
           description: Список файлов диска указанного типа
-  /storages/{id}/file/:
+  /storages/{id}/files/:
     get:
       security:
         - bearerAuth: [ ]
       tags:
         - nav
-      summary: Получить ссылку на загрузку файла
+      summary: Скачать файл
+      description: Эндпоинт вернет файл в бинарном виде. На фронте его можно отобразить через blob
       parameters:
         - in: path
           name: id
@@ -150,13 +185,25 @@ paths:
             type: integer
         - in: query
           name: path
-          description: Путь к файлу на диске
+          description: Путь к файлу в хранилище
           schema:
             type: string
           required: true
       responses:
         200:
-          description: ok
+          description: Бинарный файл
+  /token/create:
+    get:
+      tags:
+        - auth
+      summary: Получить токен доступа
+      description: |
+        Создать нового пользователя и вернуть токен для его идентификации и аутентификации.
+        
+        При утере токена восстановить доступ к аккаунту невозможно.
+      responses:
+        200:
+          description: Токен
 
 components:
   schemas:
@@ -170,22 +217,22 @@ components:
         driver:
           description: id типа драйвера
           type: integer
-        auth_data:
+        credentials:
           type: object
+          description: Доступы к хранилищу
   examples:
     yandex:
       summary: Яндекс Диск
-      description: | 
-        Авторизация в Яндекс Диск по отладочному токену
+      description: |
+        Для добавления диска нужно передать OAuth токен. Его выдает Яндекс.
         
         Чтобы получить токен, перенаправить пользователя по адресу
-        https://oauth.yandex.ru/authorize?response_type=token&client_id=APP_ID.
-        
-        Пользователь должен быть залогиненным в яндекс и предоставить доступ к своему диску.
+        https://oauth.yandex.ru/authorize?response_type=token&client_id=4e2509198c704e87ab2a3e3a47be5e7e.
+        Пользователь должен быть залогиненным в Яндекс и подтвердить доступ к своему диску.
       value:
         label: DS drive
         driver: 1
-        auth_data:
+        credentials:
           token: AQAEA7qi7begAAfqC7jeGwAwxUpHhscXAXEEw
     ftp:
       summary: FTP
@@ -195,12 +242,13 @@ components:
         Не реализовано. Только для примера, что в спецификации предусмотрено расширению функционала
       value:
         driver: 2
-        auth_data:
+        credentials:
           username: admin
           password: 123456
 
   securitySchemes:
     bearerAuth:
+      description: Токен пользователя, полученный через `/token/create`
       type: http
       scheme: bearer
 
