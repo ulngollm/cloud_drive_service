@@ -3,6 +3,7 @@
 namespace App\Http\Services\ExternalStorage;
 
 use App\Models\Storage;
+use Illuminate\Support\Arr;
 
 class Router
 {
@@ -24,6 +25,6 @@ class Router
 
     private function findDriverHandler(string $driverName)
     {
-        return $this->drivers[$driverName]['handler'];
+        return Arr::get($this->drivers, "$driverName.handler");
     }
 }
