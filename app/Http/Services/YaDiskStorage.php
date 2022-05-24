@@ -13,6 +13,7 @@ use App\Http\Services\YaDiskResponses\FolderFilesCollection;
 use App\Models\Storage;
 use App\Models\StorageCredentials;
 use App\Models\TokenStorageCredentials;
+use Illuminate\Support\Facades\Http;
 
 class YaDiskStorage implements ExternalStorage
 {
@@ -44,7 +45,8 @@ class YaDiskStorage implements ExternalStorage
     {
         $credentials = $this->getCredentials();
         $result = $this->connector->makeRequest($request, $credentials);
-        return DownloadFile::from($result);
+        $response = Http::get($result['href']);
+        return DownloadFile::from($response);
     }
 
     public function getCredentials(): StorageCredentials|TokenStorageCredentials

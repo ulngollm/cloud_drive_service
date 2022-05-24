@@ -2,18 +2,26 @@
 
 namespace App\Http\Services\YaDiskResponses;
 
-use Illuminate\Support\Arr;
+use Illuminate\Http\Client\Response;
 
 class DownloadFile
 {
     public function __construct(
-        public string $link
+        public string $content,
+        public string $contentType
     )
     {
     }
-    
-    public static function from(array $json): static
+
+    public function getResponse(): \Illuminate\Http\Response
     {
-        return new static(Arr::get($json, 'href'));
+        return response($this->content, 200, [
+            'Content-Type' => $this->contentType
+        ]);
+    }
+
+    public static function from(Response $response): static
+    {
+        return new static($response->body(), $response->header('content-type'));
     }
 }

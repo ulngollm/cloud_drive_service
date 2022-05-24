@@ -76,7 +76,7 @@ class StorageController extends Controller
 
         $handler = $router->findHandler($storage);
         $response = $handler->getFile($apiRequest);
-        return response()->json($response);
+        return $response->getResponse();
     }
 
     /**
