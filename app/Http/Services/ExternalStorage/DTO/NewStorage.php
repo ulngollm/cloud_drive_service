@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\ExternalStorage\DTO;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 
@@ -25,9 +26,9 @@ class NewStorage
         );
     }
 
-    public function userId(int $userId)
+    public function forUser(User $user)
     {
-        $this->user_id = $userId;
+        $this->user_id = $user->id;
         return $this;
     }
 }

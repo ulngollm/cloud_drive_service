@@ -4,6 +4,7 @@ namespace App\Http\Services\ExternalStorage;
 
 use App\Http\Services\ExternalStorage\DTO\NewStorage;
 use App\Models\Storage;
+use App\Models\StorageType;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
@@ -21,9 +22,9 @@ class Storages
         return $storage;
     }
 
-    public function getList(int $userId): Collection
+    public function getList(User $user): Collection
     {
-        return Storage::where('user_id', $userId)->get();
+        return $user->storages;
     }
 
     public function renameStorage(Storage $storage, string $label): Storage
@@ -37,4 +38,10 @@ class Storages
     {
         $storage->delete();
     }
+
+    public function getTypes()
+    {
+        return StorageType::all();
+    }
+
 }

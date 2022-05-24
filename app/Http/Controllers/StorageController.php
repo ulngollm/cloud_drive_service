@@ -23,15 +23,15 @@ class StorageController extends Controller
 
     public function getList(Request $request)
     {
-        $userId = $request->user()->id;
-        return $this->storages->getList($userId);
+        $user = $request->user();
+        return $this->storages->getList($user);
     }
 
     public function addStorage(Request $request)
     {
         $user = $request->user();
 
-        $storage = NewStorage::fromRequest($request)->userId($user->id);
+        $storage = NewStorage::fromRequest($request)->forUser($user);
         return $this->storages->addStorage($storage);
     }
 
@@ -87,6 +87,6 @@ class StorageController extends Controller
      */
     public function getTypeList(Request $request): Collection
     {
-        return StorageType::all();
+        return $this->storages->getTypes();
     }
 }
