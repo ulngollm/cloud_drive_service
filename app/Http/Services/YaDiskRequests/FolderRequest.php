@@ -32,6 +32,7 @@ class FolderRequest implements StorageHttpRequest
 
     public static function fromRequest(Request $request): self
     {
-        return new self($request->get('path'));
+        $defaultPath = '/';
+        return new self($request->get('path') ?? $defaultPath);
     }
 }
