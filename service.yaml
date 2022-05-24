@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
-  title: Yandex Disk service
-  description: Gateway API для работы с Яндекс Диском
+  title: Storage service
+  description: Gateway API для работы с внешними хранилищами
   version: 1.0.2
 servers:
   - url: 'https://localhost:8000/api/v1/'
