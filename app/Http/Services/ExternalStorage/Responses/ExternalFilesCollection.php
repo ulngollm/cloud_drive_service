@@ -16,7 +16,4 @@ abstract class ExternalFilesCollection
     {
         return $this->items;
     }
-
-    abstract public static function from(array $json): static;
-
 }

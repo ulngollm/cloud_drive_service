@@ -2,9 +2,7 @@
 
 namespace App\Http\Services\ExternalStorage\Responses;
 
-use Illuminate\Http\Client\Response;
-
-class DownloadFile
+abstract class DownloadedFile
 {
     public function __construct(
         public string $content,
@@ -18,10 +16,5 @@ class DownloadFile
         return response($this->content, 200, [
             'Content-Type' => $this->contentType
         ]);
-    }
-
-    public static function from(Response $response): static
-    {
-        return new static($response->body(), $response->header('content-type'));
     }
 }

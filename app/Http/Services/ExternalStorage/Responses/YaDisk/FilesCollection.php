@@ -4,15 +4,16 @@ namespace App\Http\Services\ExternalStorage\Responses\YaDisk;
 
 use App\Http\Services\ExternalStorage\DTO\YaDiskFile;
 use App\Http\Services\ExternalStorage\Responses\ExternalFilesCollection;
-use Illuminate\Support\Arr;
+use Arhitector\Yandex\Disk\AbstractResource;
+use Illuminate\Support\Collection;
 
-class FilteredFilesCollection extends ExternalFilesCollection
+class FilesCollection extends ExternalFilesCollection
 {
 
-    public static function from(array $json): static
+    public static function from(Collection $data): static
     {
-        $items = collect(Arr::get($json, 'items'))
-            ->map(function ($item) {
+        $items = $data
+            ->map(function (AbstractResource $item) {
                 return YaDiskFile::from($item);
             });
         return new static($items);

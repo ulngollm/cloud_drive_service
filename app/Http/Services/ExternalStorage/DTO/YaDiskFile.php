@@ -2,11 +2,12 @@
 
 namespace App\Http\Services\ExternalStorage\DTO;
 
+use Arhitector\Yandex\Disk\AbstractResource;
 use Illuminate\Support\Str;
 
 class YaDiskFile extends ExternalFile
 {
-    public static function from(array $item)
+    public static function from(AbstractResource $item): static
     {
         return new static(
             id: $item['resource_id'],
