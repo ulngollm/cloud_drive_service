@@ -18,5 +18,23 @@ return [
             'base_url' => 'https://cloud-api.yandex.net/v1',
             'icon' => null
         ]
+    ],
+    'media_types' => [
+        [
+            'name' => 'Картинки',
+            'code' => 'image'
+        ],
+        [
+            'name' => 'Ayдио',
+            'code' => 'audio'
+        ],
+        [
+            'name' => 'Видео',
+            'code' => 'video'
+        ],
+        [
+            'name' => 'Текст',
+            'code' => 'text'
+        ],
     ]
 ];

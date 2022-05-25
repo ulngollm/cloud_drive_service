@@ -14,5 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('default' , ['title' => 'asd', 'root' => true]);
+    return view('wrapper' , ['title' => 'Мои хранилища']);
 });
+
+Route::get('/storages/list/{user}', [\App\Http\Controllers\DemoStorageController::class, 'storages']);
+Route::get('/storages/{storage}', [\App\Http\Controllers\DemoStorageController::class, 'index']);

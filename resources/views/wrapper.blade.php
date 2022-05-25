@@ -8,10 +8,13 @@
     <title>Document</title>
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-    <div class="container">
-        @include('layout.layout')
-    </div>
+<div class="container">
+    @include($page)
+</div>
+@include('cloudstorages::modals.add')
 </body>
 </html>

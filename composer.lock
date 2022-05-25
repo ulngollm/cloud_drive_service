@@ -5997,12 +5997,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ulngollm/laravel-package-demo.git",
-                "reference": "99b81a92a040e003365486b2454061261c142cd8"
+                "reference": "18f1cc25de7c0837504ae6646ac885c1b2277e53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ulngollm/laravel-package-demo/zipball/99b81a92a040e003365486b2454061261c142cd8",
-                "reference": "99b81a92a040e003365486b2454061261c142cd8",
+                "url": "https://api.github.com/repos/ulngollm/laravel-package-demo/zipball/18f1cc25de7c0837504ae6646ac885c1b2277e53",
+                "reference": "18f1cc25de7c0837504ae6646ac885c1b2277e53",
                 "shasum": ""
             },
             "default-branch": true,
@@ -6029,7 +6029,7 @@
                 "source": "https://github.com/ulngollm/laravel-package-demo/tree/master",
                 "issues": "https://github.com/ulngollm/laravel-package-demo/issues"
             },
-            "time": "2022-05-25T12:02:35+00:00"
+            "time": "2022-05-25T18:17:48+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
