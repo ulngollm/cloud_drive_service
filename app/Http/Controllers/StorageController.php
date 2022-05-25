@@ -4,12 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\ExternalStorage\Storages;
 use App\Http\Services\ExternalStorage\DTO\NewStorage;
-use App\Http\Services\ExternalStorage\Requests\YaDisk\FileDownloadRequest;
-use App\Http\Services\ExternalStorage\Requests\YaDisk\FolderRequest;
-use App\Http\Services\ExternalStorage\Requests\YaDisk\TypeRequest;
 use App\Http\Services\ExternalStorage\Router;
 use App\Models\Storage;
-use App\Models\StorageType;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
@@ -35,7 +31,7 @@ class StorageController extends Controller
         return $this->storages->addStorage($storage);
     }
 
-    public function getStorage(Request $request, Storage $storage)
+    public function getStorage(Storage $storage)
     {
         return $storage;
     }
@@ -53,39 +49,33 @@ class StorageController extends Controller
 
     public function getFolderFiles(Request $request, Storage $storage, Router $router)
     {
-        $apiRequest = FolderRequest::fromRequest($request);
-
+        $path = $request->get('path');
         $handler = $router->findHandler($storage);
-        return $handler->getFolderFiles($apiRequest)->getItems();
+        return $handler->getFolderFiles($path)->getItems();
 
 
     }
 
-    public function filterByType(Request $request, Storage $storage, string $type, Router $router)
+    public function filterByType(Storage $storage, string $type, Router $router)
     {
-        $apiRequest = new TypeRequest($type);
-
         $handler = $router->findHandler($storage);
-        return $handler->filterByType($apiRequest)->getItems();
-
+        return $handler->filterByType($type)->getItems();
     }
 
 
     public function getFile(Request $request, Storage $storage, Router $router)
     {
-        $apiRequest = FileDownloadRequest::fromRequest($request);
+        $path = $request->get('path');
 
         $handler = $router->findHandler($storage);
-        $response = $handler->getFile($apiRequest);
+        $response = $handler->getFile($path);
         return $response->getResponse();
     }
 
     /**
      * Получить список всех доступных типов хранилищ
-     * @param Request $request
-     * @return Collection
      */
-    public function getTypeList(Request $request): Collection
+    public function getTypeList(): Collection
     {
         return $this->storages->getTypes();
     }

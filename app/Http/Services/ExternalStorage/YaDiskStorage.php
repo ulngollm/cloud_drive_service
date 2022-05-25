@@ -2,9 +2,6 @@
 
 namespace App\Http\Services\ExternalStorage;
 
-use App\Http\Services\ExternalStorage\Requests\YaDisk\FileDownloadRequest;
-use App\Http\Services\ExternalStorage\Requests\YaDisk\FolderRequest;
-use App\Http\Services\ExternalStorage\Requests\YaDisk\TypeRequest;
 use App\Http\Services\ExternalStorage\Responses\ExternalFilesCollection;
 use App\Http\Services\ExternalStorage\Responses\YaDisk\DownloadedFile;
 use App\Http\Services\ExternalStorage\Responses\YaDisk\FilesCollection;
@@ -28,31 +25,31 @@ class YaDiskStorage implements ExternalStorage
     }
 
 
-    public function filterByType(TypeRequest $request): ExternalFilesCollection
+    public function filterByType(string $mediaType): ExternalFilesCollection
     {
         $credentials = $this->getCredentials();
         $this->disk->setAccessToken($credentials->token);
-        $result = $this->disk->getResources()->setMediaType($request->mediaType);
+        $result = $this->disk->getResources()->setMediaType($mediaType);
 
         $collection = LazyCollection::make($result->getIterator())->collect();
         return FilesCollection::from($collection);
     }
 
-    public function getFolderFiles(FolderRequest $request): ExternalFilesCollection
+    public function getFolderFiles(string $path): ExternalFilesCollection
     {
         $credentials = $this->getCredentials();
         $this->disk->setAccessToken($credentials->token);
-        $result = $this->disk->getResource($request->path)->setLimit(100);
+        $result = $this->disk->getResource($path)->setLimit(100);
 
         $collection = LazyCollection::make($result->items->getIterator())->collect();
         return FilesCollection::from($collection);
     }
 
-    public function getFile(FileDownloadRequest $request): DownloadedFile
+    public function getFile(string $path): DownloadedFile
     {
         $credentials = $this->getCredentials();
         $this->disk->setAccessToken($credentials->token);
-        $resource = $this->disk->getResource($request->path);
+        $resource = $this->disk->getResource($path);
         $stream = $this->streamFactory->createStream();
         $resource->download($stream);
 
