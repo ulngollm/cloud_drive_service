@@ -47,29 +47,22 @@ class StorageController extends Controller
         $this->storages->deleteStorage($storage);
     }
 
-    public function getFolderFiles(Request $request, Storage $storage, Router $router)
+    public function getFolderFiles(Request $request, Storage $storage)
     {
         $path = $request->get('path');
-        $handler = $router->findHandler($storage);
-        return $handler->getFolderFiles($path)->getItems();
-
-
+        return $this->storages->getFolderFiles($storage, $path)->getItems();
     }
 
-    public function filterByType(Storage $storage, string $type, Router $router)
+    public function filterByType(Storage $storage, string $type)
     {
-        $handler = $router->findHandler($storage);
-        return $handler->filterByType($type)->getItems();
+        return $this->storages->filterByType($storage, $type)->getItems();
     }
 
 
-    public function getFile(Request $request, Storage $storage, Router $router)
+    public function getFile(Request $request, Storage $storage)
     {
         $path = $request->get('path');
-
-        $handler = $router->findHandler($storage);
-        $response = $handler->getFile($path);
-        return $response->getResponse();
+        return $this->storages->getFile($storage, $path)->getResponse();
     }
 
     /**
