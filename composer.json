@@ -11,7 +11,8 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.11",
         "laravel/sanctum": "^2.15",
-        "laravel/tinker": "^2.7"
+        "laravel/tinker": "^2.7",
+        "ully/cloudstorages": "dev-master"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -59,5 +60,11 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/ulngollm/laravel-package-demo"
+        }
+    ]
 }

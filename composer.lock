@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c043fd548d36967d10d2654aade2ca59",
+    "content-hash": "258c2f44725e1954b7772144e77192d8",
     "packages": [
         {
             "name": "arhitector/yandex",
@@ -5992,6 +5992,46 @@
             "time": "2021-12-08T09:12:39+00:00"
         },
         {
+            "name": "ully/cloudstorages",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ulngollm/laravel-package-demo.git",
+                "reference": "43619183705724e0c04f6609f2cc8b1736bf9d41"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ulngollm/laravel-package-demo/zipball/43619183705724e0c04f6609f2cc8b1736bf9d41",
+                "reference": "43619183705724e0c04f6609f2cc8b1736bf9d41",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Ully\\Cloudstorages\\CloudStoragesProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ully\\Cloudstorages\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "ulngollm",
+                    "email": "ulngollm@gmail.com"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/ulngollm/laravel-package-demo/tree/master",
+                "issues": "https://github.com/ulngollm/laravel-package-demo/issues"
+            },
+            "time": "2022-05-25T11:33:58+00:00"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v5.4.1",
             "source": {
@@ -8868,7 +8908,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "arhitector/yandex": 20
+        "arhitector/yandex": 20,
+        "ully/cloudstorages": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
