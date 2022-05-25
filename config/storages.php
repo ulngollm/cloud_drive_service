@@ -1,11 +1,16 @@
 <?php
 
 
-use App\Http\Services\ExternalStorage\YaDiskStorage;
-use App\Models\TokenStorageCredentials;
+use Ully\Cloudstorages\Models\TokenStorageCredentials;
+use Ully\Cloudstorages\Services\YaDiskStorage;
 
 return [
-    'driver' => [
+    'config' => [
+        'routes' => [
+            'prefix' => 'api/storages'
+        ]
+    ],
+    'drivers' => [
         'ya_disk' => [
             'name' => 'Яндекс Диск', //название, которое будет отображаться пользователю
             'handler' => YaDiskStorage::class,

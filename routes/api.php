@@ -1,9 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\StorageController;
 use Illuminate\Support\Facades\Route;
-use Ully\Cloudstorages\Middleware\CheckStorageAccess;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,22 +13,6 @@ use Ully\Cloudstorages\Middleware\CheckStorageAccess;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::get('/storages/types', [StorageController::class, 'getTypeList']);
-
-Route::middleware(['auth:sanctum', CheckStorageAccess::class])->group(function () {
-    Route::get('/storages/{storage}', [StorageController::class, 'getStorage']);
-    Route::patch('/storages/{storage}', [StorageController::class, 'renameStorage']);
-    Route::delete('/storages/{storage}', [StorageController::class, 'deleteStorage']);
-    Route::get('/storages/{storage}/files/folder', [StorageController::class, 'getFolderFiles']);
-    Route::get('/storages/{storage}/files/{type}', [StorageController::class, 'filterByType']);
-    Route::get('/storages/{storage}/files/', [StorageController::class, 'getFile']);//должен вернуть бинарный файл
-
-});
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::post('/storages/', [StorageController::class, 'addStorage']);
-    Route::get('/storages/', [StorageController::class, 'getList']);
-});
 
 Route::get('/token/create', AuthController::class);
 Route::get('/login', function () {

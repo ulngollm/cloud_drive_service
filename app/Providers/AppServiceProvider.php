@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Http\Services\ExternalStorage\CredentialsStorage;
 use Illuminate\Support\ServiceProvider;
+use Ully\Cloudstorages\Services\CredentialsStorage;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,9 +14,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->when(CredentialsStorage::class)
-            ->needs('$drivers')
-            ->giveConfig('storages.driver');
     }
 
     /**
