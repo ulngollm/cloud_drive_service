@@ -2,9 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StorageController;
-use App\Http\Middleware\CheckStorageAccess;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Ully\Cloudstorages\Middleware\CheckStorageAccess;
 
 /*
 |--------------------------------------------------------------------------

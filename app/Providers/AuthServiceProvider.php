@@ -26,9 +26,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        Gate::define('access-storage', function (User $user, Storage $storage) {
-            return $storage->user->id === $user->id;
-        });
     }
 }
