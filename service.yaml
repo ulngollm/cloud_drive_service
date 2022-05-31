@@ -72,11 +72,7 @@ paths:
         - manage
       summary: Хранилище
       parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
+        - $ref: '#/components/parameters/id'
       responses:
         200:
           description: Информация о хранилище
@@ -206,6 +202,14 @@ paths:
           description: Токен
 
 components:
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: id хранилища
+      schema:
+        type: integer
   schemas:
     NewStorage:
       type: object
@@ -251,7 +255,3 @@ components:
       description: Токен пользователя, полученный через `/token/create`
       type: http
       scheme: bearer
-
-
-
-  
