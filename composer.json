@@ -27,7 +27,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Ully\\Cloudstorages\\": "package/ully/cloudstorages",
+            "Ully\\Cloudstorages\\": "package/ully/cloudstorages/src",
             "Ully\\Cloudstorages\\Database\\Seeders\\": "package/ully/cloudstorages/src/database/seeders/"
         }
     },
