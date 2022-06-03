@@ -36,6 +36,12 @@ paths:
       responses:
         200:
           description: Список хранилищ авторизованного пользователя
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Storage'
     post:
       security:
         - bearerAuth: [ ]
@@ -46,23 +52,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewStorage'
+              $ref: '#/components/schemas/InputStorage'
             examples:
               yandex:
                 $ref: '#/components/examples/yandex'
-
       responses:
         200:
           description: ok
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    description: id хранилища
-                    example: 1
+                $ref: '#/components/schemas/Storage'
 
   /storages/{id}/:
     get:
@@ -76,6 +76,10 @@ paths:
       responses:
         200:
           description: Информация о хранилище
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Storage'
     patch:
       security:
         - bearerAuth: [ ]
@@ -91,6 +95,10 @@ paths:
       responses:
         200:
           description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Storage'
     delete:
       parameters:
         - in: path
@@ -130,6 +138,12 @@ paths:
       responses:
         200:
           description: Список файлов по указанному пути
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/File'
   /storages/{id}/files/{type}:
     get:
       security:
@@ -164,6 +178,12 @@ paths:
       responses:
         200:
           description: Список файлов диска указанного типа
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/File'
   /storages/{id}/files/:
     get:
       security:
@@ -188,6 +208,11 @@ paths:
       responses:
         200:
           description: Бинарный файл
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
   /token/create:
     get:
       tags:
@@ -200,7 +225,14 @@ paths:
       responses:
         200:
           description: Токен
-
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: Токен для временного пользователя
 components:
   parameters:
     id:
@@ -211,7 +243,7 @@ components:
       schema:
         type: integer
   schemas:
-    NewStorage:
+    InputStorage:
       type: object
       properties:
         label:
@@ -224,6 +256,53 @@ components:
         credentials:
           type: object
           description: Доступы к хранилищу
+    File:
+      type: object
+      properties:
+        id:
+          type: string
+          description: идентификатор файла
+        type:
+          description: Обощенный тип файла - файл или директория
+          type: string
+          enum:
+            - file
+            - dir
+        path:
+          type: string
+          description: Путь к файлу
+        name:
+          type: string
+          description: Название файла
+        mediaType:
+          type: string
+          nullable: true
+          description: Обощенный медиатип. Использовать для отображения иконки
+          enum:
+            - video
+            - audio
+            - document
+            - image
+            - text
+        mimeType:
+          type: string
+          description: mimetype файла
+          example: image/jpeg
+    Storage:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Идентификатор хранилища
+        label:
+          type: string
+          description: Пользовательское название хранилища
+        type_id:
+          type: integer
+          description: |
+            Идентификатор типа хранилища. 
+            Доступные типы получить по эндпоинту /storages/types
+
   examples:
     yandex:
       summary: Яндекс Диск
