@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/token/create', AuthController::class);
+Route::post('/user', [AuthController::class, 'createUser']);
+Route::delete('/user', [AuthController::class, 'deleteUser'])->middleware('auth:sanctum');
 Route::get('/login', function () {
     abort(403);
 })->name('login');

@@ -7,10 +7,16 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function __invoke(Request $request)
+    public function createUser(Request $request)
     {
         $user = User::create();
         $token = $user->createToken('storage', ['storage:access'])->plainTextToken;
         return ['token' => $token];
+    }
+
+    public function deleteUser(Request $request)
+    {
+        $user = $request->user();
+        return ['result' => $user->delete()];
     }
 }
