@@ -2,9 +2,9 @@ openapi: 3.0.3
 info:
   title: Storage service
   description: Gateway API для работы с внешними хранилищами
-  version: 1.0.2
+  version: 1.0.3
 servers:
-  - url: 'https://localhost:8000/api/v1/'
+  - url: 'http://localhost:8001/api/'
     description: dev url
 tags:
   - name: info
@@ -13,8 +13,8 @@ tags:
     description: Управление дисками
   - name: nav
     description: Навигация по файлам
-  - name: auth
-    description: Аутентификация
+  - name: demo
+    description: Функционал для демо
 paths:
   /storages/types/:
     get:
@@ -31,7 +31,6 @@ paths:
         - bearerAuth: [ ]
       tags:
         - nav
-        - manage
       summary: Список хранилищ пользователя
       responses:
         200:
@@ -213,10 +212,10 @@ paths:
               schema:
                 type: string
                 format: binary
-  /token/create:
-    get:
+  /user:
+    post:
       tags:
-        - auth
+        - demo
       summary: Получить токен доступа
       description: |
         Создать нового пользователя и вернуть токен для его идентификации и аутентификации.
@@ -233,6 +232,29 @@ paths:
                   token:
                     type: string
                     description: Токен для временного пользователя
+    delete:
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - demo
+      summary: Удалить пользователя
+      description: |
+        Удалить временного пользователя
+      responses:
+        200:
+          description: Токен
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    description: Результат удаления
+                    example: true
+        403:
+          description: Неавторизован
+
 components:
   parameters:
     id:
