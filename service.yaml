@@ -91,6 +91,16 @@ paths:
           required: true
           schema:
             type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  type: string
+                  description: Новое название
+                  example: 123456
       responses:
         200:
           description: ok
