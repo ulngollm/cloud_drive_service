@@ -353,6 +353,6 @@ components:
 
   securitySchemes:
     bearerAuth:
-      description: Токен пользователя, полученный через `/token/create`
+      description: Токен пользователя, полученный через `POST` `/user`
       type: http
       scheme: bearer
